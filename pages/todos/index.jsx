@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 const Todos = () => {
     const [todos, setTodos] = useState([]);
+    const [todoInput, setTodoInput] = useState('');
 
     const getData = async (url) => {
         const res = await fetch(url);
@@ -19,11 +20,26 @@ const Todos = () => {
     }, []);
 
 
+    const submitHandler = async () => {
+        const res = await fetch('/api/todos', {
+            method: "POST",
+            body: JSON.stringify({ todo: todoInput }),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        console.log(data)
+    }
+
     return (
         <div>
             <ul>
                 {todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
             </ul>
+
+            <div>
+                <input type="text" name="todo" value={todoInput} onChange={(e) => setTodoInput(e.target.value)} />
+                <button onClick={submitHandler}>create todo</button>
+            </div>
         </div>
     )
 
