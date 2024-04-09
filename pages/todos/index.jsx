@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const Todos = ({ data }) => {
+
+const Todos = () => {
+    const [todos, setTodos] = useState([]);
+
+    const getData = async (url) => {
+        const res = await fetch(url);
+        const data = await res.json();
+        return data
+    }
+
+    useEffect(() => {
+        getData('/api/todos').then((data) => {
+            if (data) {
+                setTodos(data)
+            }
+        })
+    }, []);
+
+
     return (
         <div>
             <ul>
-                {data.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
+                {todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
             </ul>
         </div>
     )
@@ -15,14 +33,3 @@ const Todos = ({ data }) => {
 export default Todos
 
 
-export async function getStaticProps() {
-    const res = await fetch('http://localhost:3000/api/todos');
-    const data = await res.json();
-
-
-    return {
-        props: {
-            data
-        }
-    }
-}
