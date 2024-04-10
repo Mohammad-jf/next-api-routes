@@ -46,9 +46,7 @@ const Todos = () => {
             method: "PUT",
             body: JSON.stringify([{ id: 5, todo: 'todo five' }, { id: 6, todo: 'todo six' },]),
             headers: { "Content-Type": "application/json" },
-
-
-        });
+        })
         const data = await res.json();
         setTodos(data.data)
         console.log(data)
@@ -58,7 +56,7 @@ const Todos = () => {
     return (
         <div>
             <ul>
-                {todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
+                {todos.map((todo) => <Link href={`/api/todos/${todo.id}`} key={todo.id}><li>{todo.todo}</li></Link>)}
             </ul>
 
             <div>
