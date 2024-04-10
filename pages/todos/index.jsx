@@ -44,8 +44,13 @@ const Todos = () => {
     const putHandler = async () => {
         const res = await fetch('/api/todos', {
             method: "PUT",
+            body: JSON.stringify([{ id: 5, todo: 'todo five' }, { id: 6, todo: 'todo six' },]),
+            headers: { "Content-Type": "application/json" },
+
+
         });
         const data = await res.json();
+        setTodos(data.data)
         console.log(data)
     }
 

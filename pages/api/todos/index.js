@@ -21,7 +21,8 @@ export default function handler(req, res) {
       break;
 
     case 'PUT':
-      res.status(200).json({ message: 'data replaced' });
+      const newTodos = [...req.body];
+      res.status(200).json({ message: 'data replaced', data: newTodos });
       break;
   }
 }
