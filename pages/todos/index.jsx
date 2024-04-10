@@ -30,6 +30,26 @@ const Todos = () => {
         console.log(data)
     }
 
+
+    const deleteHandler = async () => {
+        const res = await fetch('/api/todos', {
+            method: "DELETE",
+        });
+        const data = await res.json();
+        setTodos(data.data);
+        console.log(data)
+    }
+
+
+    const putHandler = async () => {
+        const res = await fetch('/api/todos', {
+            method: "PUT",
+        });
+        const data = await res.json();
+        console.log(data)
+    }
+
+
     return (
         <div>
             <ul>
@@ -39,6 +59,13 @@ const Todos = () => {
             <div>
                 <input type="text" name="todo" value={todoInput} onChange={(e) => setTodoInput(e.target.value)} />
                 <button onClick={submitHandler}>create todo</button>
+            </div>
+
+            <div>
+                <button onClick={deleteHandler}>Delete All</button>
+            </div>
+            <div>
+                <button onClick={putHandler}>Replqace All</button>
             </div>
         </div>
     )

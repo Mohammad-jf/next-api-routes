@@ -1,15 +1,27 @@
 import { todos } from '@/data/todos';
 
 export default function handler(req, res) {
-  if (req.method === 'GET') {
-    res.status(200).json(todos);
-  } else if (req.method === 'POST') {
-    const { todo } = req.body;
-    const newTodo = {
-      id: todos.length + 1,
-      todo,
-    };
-    todos.push(newTodo);
-    res.status(201).json(todos);
+  switch (req.method) {
+    case 'GET':
+      res.status(200).json(todos);
+      break;
+
+    case 'POST':
+      const { todo } = req.body;
+      const newTodo = {
+        id: todos.length + 1,
+        todo,
+      };
+      todos.push(newTodo);
+      res.status(201).json(todos);
+      break;
+
+    case 'DELETE':
+      res.status(200).json({ message: 'todos where deleted', data: [] });
+      break;
+
+    case 'PUT':
+      res.status(200).json({ message: 'data replaced' });
+      break;
   }
 }
