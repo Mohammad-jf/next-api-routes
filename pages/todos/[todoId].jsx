@@ -9,17 +9,14 @@ const Todo = () => {
     const [todo, setTodo] = useState({});
     const router = useRouter();
 
-
-
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch(`/api/todos/${router.query.todoId}`)
             const data = await res.json();
-            setTodo(data);
+            console.log(data)
         }
-
         fetchData();
-    }, [router.query.todoId]);
+    }, []);
 
 
     if (todo) {

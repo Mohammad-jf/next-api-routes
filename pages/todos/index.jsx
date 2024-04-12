@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 const Todos = () => {
     const [todos, setTodos] = useState([]);
     const [todoInput, setTodoInput] = useState('');
+    const [todoId, setTodoId] = useState(null)
+    const [newTodo, setNewTodo] = useState('')
 
     const getData = async (url) => {
         const res = await fetch(url);
@@ -53,10 +55,20 @@ const Todos = () => {
     }
 
 
+    const patchHandler = async () => {
+        const res = await fetch(`/api/todos/${todoId}`, {
+            method: "PATCH",
+            body: JSON.stringify({ id: todoId, todo: newTodo }),
+            headers: { "Content-Type": "application/json" },
+        })
+        const data = await res.json();
+        console.log(data)
+    }
+
     return (
         <div>
             <ul>
-                {todos.map((todo) => <Link href={`/api/todos/${todo.id}`} key={todo.id}><li>{todo.todo}</li></Link>)}
+                {todos.map((todo) => <li key={todo.id}>{todo.todo}</li>)}
             </ul>
 
             <div>
@@ -67,8 +79,27 @@ const Todos = () => {
             <div>
                 <button onClick={deleteHandler}>Delete All</button>
             </div>
+
             <div>
                 <button onClick={putHandler}>Replqace All</button>
+            </div>
+
+            <div>
+                <input
+                    type="text"
+                    value={todoId}
+                    placeholder='id'
+                    onChange={(e) => setTodoId(e.target.value)} />
+
+                <input
+                    type="text"
+                    value={newTodo}
+                    placeholder='New todo'
+                    onChange={(e) => setNewTodo(e.target.value)} />
+            </div>
+
+            <div>
+                <button onClick={patchHandler}>Patch handler</button>
             </div>
         </div>
     )

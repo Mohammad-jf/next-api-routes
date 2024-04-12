@@ -7,5 +7,10 @@ export default function handler(req, res) {
   switch (req.method) {
     case 'GET':
       res.status(200).json(todo);
+      break;
+
+    case 'PATCH':
+      const newTodo = { ...todo, ...req.body };
+      res.status(200).json(newTodo);
   }
 }
