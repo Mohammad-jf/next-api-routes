@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const Todos = () => {
     const [todos, setTodos] = useState([]);
     const [todoInput, setTodoInput] = useState('');
-    const [todoId, setTodoId] = useState(null)
+    const [todoId, setTodoId] = useState('')
     const [newTodo, setNewTodo] = useState('')
 
     const getData = async (url) => {
@@ -58,11 +58,13 @@ const Todos = () => {
     const patchHandler = async () => {
         const res = await fetch(`/api/todos/${todoId}`, {
             method: "PATCH",
-            body: JSON.stringify({ id: todoId, todo: newTodo }),
+            body: JSON.stringify({ todo: newTodo }),
             headers: { "Content-Type": "application/json" },
         })
         const data = await res.json();
-        console.log(data)
+        setTodos(data)
+        setNewTodo('');
+        setTodoId('')
     }
 
     return (

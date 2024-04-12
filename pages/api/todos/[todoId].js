@@ -10,7 +10,8 @@ export default function handler(req, res) {
       break;
 
     case 'PATCH':
-      const newTodo = { ...todo, ...req.body };
-      res.status(200).json(newTodo);
+      const index = todos.findIndex((todo) => todo.id === +todoId);
+      todos[index] = { id: todoId, todo: req.body.todo };
+      res.status(200).json(todos);
   }
 }
